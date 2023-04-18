@@ -20,13 +20,14 @@ client = discord.Client(intents=intents)  # create a Client object with the Inte
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
 
+# defaults to english translation
 @client.event
 async def on_message(message):
-    translation = translator.translate(message.content[1:], dest="es") # defaults to english translation
     print(message.content)
     if message.content.startswith('$'):
-        await message.channel.send(f'{translation.origin} ({translation.src}) --> {translation.text} ({translation.dest})')
-
+        dest_language = message.content[1:3]
+        translation = translator.translate(message.content[3:], dest=dest_language) 
+        await message.channel.send(f'{translation.origin} ({translation.src}) --> {translation.text} ({dest_language})')
 
 print(os.getenv('TOKEN'))
 client.run(os.getenv('TOKEN'))
