@@ -4,7 +4,6 @@ import discord
 import random
 from discord.ext import commands
 import os
-from pprint import pprint
 
 from dotenv import load_dotenv
 
