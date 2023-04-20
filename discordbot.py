@@ -23,11 +23,14 @@ async def on_ready():
 # defaults to english translation
 @client.event
 async def on_message(message):
-    print(message.content)
+    global translation
     if message.content.startswith('$'):
         dest_language = message.content[1:3]
         translation = translator.translate(message.content[3:], dest=dest_language) 
         await message.channel.send(f'{translation.origin} ({translation.src}) --> {translation.text} ({dest_language})')
+
+    if message.content == '!pronounce':
+        await message.channel.send(translation.text, tts = True)
 
 print(os.getenv('TOKEN'))
 client.run(os.getenv('TOKEN'))
